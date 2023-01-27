@@ -1,0 +1,33 @@
+<app-layout [layout]="layout">
+  <form [formGroup]="form" class="flex flex-col justify-center items-center mt-8">
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        placeholder="Joaquín Rivera Montaño"
+        formControlName="_name"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Amount</mat-label>
+      <input matInput placeholder="20" formControlName="_amount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Price</mat-label>
+      <input matInput placeholder="19.99" formControlName="_price" />
+    </mat-form-field>
+
+    <!-- [disabled]="disabledButton" -->
+    <button
+      mat-button
+      mat-raised-button
+      class="w-80"
+      color="primary"
+      (click)="save()"
+    >
+      Save
+    </button>
+  </form>
+</app-layout>

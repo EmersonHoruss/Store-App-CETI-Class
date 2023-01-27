@@ -3,6 +3,8 @@ import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { LayoutI } from '../shared/models/interfaces/layout-interface';
 
 export interface PeriodicElement {
   name: string;
@@ -35,7 +37,15 @@ export class ProductComponent {
   pageSize = 5;
   pageSizeOptions = [5, 10, 100];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {
+  layout: LayoutI = {
+    title: 'Products',
+    button: {
+      url: '/product/new',
+      icon: 'add',
+    },
+  };
+
+  constructor(private _liveAnnouncer: LiveAnnouncer, private router: Router) {
     // this.sort = new MatSort()
   }
 
@@ -53,5 +63,9 @@ export class ProductComponent {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  navigate(page: string) {
+    this.router.navigateByUrl(`${this.router.url}/${page}`);
   }
 }

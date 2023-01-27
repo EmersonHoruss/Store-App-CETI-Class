@@ -8,9 +8,11 @@ import { ProductModule } from './product/product.module';
 import { SellModule } from './sell/sell.module';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { OptionsComponent } from './options/options.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent, OptionsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

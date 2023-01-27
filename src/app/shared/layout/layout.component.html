@@ -1,0 +1,20 @@
+<div class="w-full h-full">
+  <mat-card>
+    <mat-card-content class="p-0">
+      <div class="flex justify-between items-center">
+        <h1 class="no-margin">{{ layout.title }}</h1>
+        <button
+          mat-mini-fab
+          color="primary"
+          (click)="navigate(layout.button.url)"
+        >
+          <mat-icon>{{ layout.button.icon }}</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div>
+    <ng-content></ng-content>
+  </div>
+</div>

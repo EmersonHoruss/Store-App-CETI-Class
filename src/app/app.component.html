@@ -1,1 +1,9 @@
-<app-product></app-product>
+<mat-drawer-container class="w-full h-full" autosize>
+  <mat-drawer #drawer mode="side" opened>
+    <app-options></app-options>
+  </mat-drawer>
+
+  <div class="w-full h-full">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
