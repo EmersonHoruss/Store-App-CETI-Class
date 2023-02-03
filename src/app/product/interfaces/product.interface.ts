@@ -3,4 +3,6 @@ export interface ProductI {
   _name: string;
   _amount: number;
   _price: number;
+  createdAt: string;
+  updatedAt: string;
 }
