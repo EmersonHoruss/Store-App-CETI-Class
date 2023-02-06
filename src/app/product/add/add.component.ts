@@ -38,7 +38,7 @@ export class AddComponent implements OnInit {
 
   public save(): void {
     this.productS
-      .addProducts(this.clonedProduct._id, this.form.value._addedAmount)
+      .addStock(this.clonedProduct._id, this.form.value._addedAmount)
       .subscribe((product: ProductI) => {
         this.clonedProduct._amount = product._amount;
         this.dialogRef.close();

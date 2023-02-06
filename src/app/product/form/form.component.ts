@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LayoutI } from 'src/app/shared/models/interfaces/layout-interface';
 
 import { MessageComponent } from '../../shared/components/message/message.component';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-form',
@@ -13,8 +14,14 @@ import { MessageComponent } from '../../shared/components/message/message.compon
 export class FormComponent implements OnInit {
   form = new FormGroup({
     _name: new FormControl('', Validators.required),
-    _amount: new FormControl('', Validators.required),
-    _price: new FormControl('', Validators.required),
+    _amount: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[0-9]*$/),
+    ]),
+    _price: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[0-9]*.?[0-9]{0,2}$/),
+    ]),
   });
 
   layout: LayoutI = {
@@ -27,7 +34,7 @@ export class FormComponent implements OnInit {
 
   disabledButton: boolean = true;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private productS: ProductService) {}
 
   ngOnInit(): void {
     this.form.statusChanges.subscribe((e) => {
@@ -37,14 +44,20 @@ export class FormComponent implements OnInit {
 
   save() {
     console.log(this.form);
-    this.openDialog()
+    this.openDialog();
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(MessageComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+    this.productS.create(this.form.value).subscribe((e) => {
+      console.log(e);
     });
   }
 }
+
+// console.log(this.form.value);
+
+// const dialogRef = this.dialog.open(MessageComponent);
+
+// dialogRef.afterClosed().subscribe((result) => {
+//   console.log(`Dialog result: ${result}`);
+// });

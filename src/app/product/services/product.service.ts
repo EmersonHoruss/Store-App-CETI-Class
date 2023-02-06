@@ -11,16 +11,22 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Array<ProductI>> {
+  create(product: ProductI): Observable<ProductI> {
+    return this.http.post<ProductI>(this.endPoint, product);
+  }
+
+  get(): Observable<Array<ProductI>> {
     return this.http.get<Array<ProductI>>(this.endPoint);
   }
 
-  postProduct() {}
-
-  addProducts(_id: string, _addedAmount: number): Observable<ProductI> {
+  addStock(_id: string, _addedAmount: number): Observable<ProductI> {
     return this.http.put<ProductI>(this.endPoint + '/addStock', {
       _id,
       _addedAmount,
     });
+  }
+
+  update(product: ProductI): Observable<ProductI> {
+    return this.http.put<ProductI>(this.endPoint, product);
   }
 }

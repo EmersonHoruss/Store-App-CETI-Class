@@ -35,7 +35,7 @@ export class ProductComponent {
   }
 
   loadData() {
-    this.productS.getProducts().subscribe((e: Array<ProductI>) => {
+    this.productS.get().subscribe((e: Array<ProductI>) => {
       this.dataSource = e;
     });
   }
