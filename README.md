@@ -1,27 +1,35 @@
-# Store
+# About
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.9.
+This project is an store app and have grow up at 20th January, 2023. This purpose is to teach to Ceti's students to undertand the basic Angular's concepts and it growing for each class trying to motivate them to create more requirements enojoying while programming.
 
-## Development server
+# Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Products
 
-## Code scaffolding
+  - Register products
+  - Add products' stock
+  - Check all your products
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Sells
+  - Register sell
+  - Check one sell
+  - Check all your sells
 
-## Build
+# History
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Group 5
 
-## Running unit tests
+Contains the next requirements:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Products
 
-## Running end-to-end tests
+  - Register products
+  - Add products' stock
+  - Check all your products
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Sells
+  - Register sell
+  - Check one sell
+  - Check all your sells
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Group 6
