@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { LayoutI } from '../shared/models/interfaces/layout-interface';
 import { ProductService } from './services/product.service';
-import { ProductI } from './interfaces/product.interface';
+import { ProductI } from './interfaces/interfaces/product.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddComponent } from './add/add.component';
 
@@ -16,12 +16,12 @@ import { AddComponent } from './add/add.component';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent {
-  keyColumns: string[] = ['_name', '_amount', '_price', 'Add'];
+  keyColumns: string[] = ['_name', '_amount', '_price', 'Options'];
   dataSource: Array<ProductI> = [];
   layout: LayoutI = {
     title: 'Products',
     button: {
-      url: '/product/new',
+      url: '/product/create',
       icon: 'add',
     },
   };
@@ -29,7 +29,8 @@ export class ProductComponent {
   constructor(
     private router: Router,
     private productS: ProductService,
-    private dialog: MatDialog
+    private dialog: MatDialog, 
+    
   ) {
     this.loadData();
   }
@@ -52,12 +53,17 @@ export class ProductComponent {
       return 'Amount';
     }
     if (keyColumn === '_price') {
-      return 'Price';
+      return 'Price (soles)';
     }
     return keyColumn;
   }
 
   openAddProductModal(product: ProductI) {
     this.dialog.open(AddComponent, { data: product, disableClose: true });
+  }
+
+  updateProduct(product: ProductI) {
+    const url = `${this.router.url}/update/${product._id}`;
+    this.router.navigateByUrl(url);
   }
 }

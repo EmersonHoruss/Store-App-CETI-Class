@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductI } from '../interfaces/product.interface';
+import { ProductI } from '../interfaces/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +20,17 @@ export class ProductService {
   }
 
   addStock(_id: string, _addedAmount: number): Observable<ProductI> {
-    return this.http.put<ProductI>(this.endPoint + '/addStock', {
+    return this.http.put<ProductI>(`${this.endPoint}/addStock`, {
       _id,
       _addedAmount,
     });
   }
 
-  update(product: ProductI): Observable<ProductI> {
+  getOne(_id: string): Observable<ProductI> {
+    return this.http.get<ProductI>(`${this.endPoint}/${_id}`);
+  }
+
+  update(product: any): Observable<ProductI> {
     return this.http.put<ProductI>(this.endPoint, product);
   }
 }

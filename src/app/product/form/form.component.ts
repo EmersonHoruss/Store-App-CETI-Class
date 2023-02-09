@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormControlStatus,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LayoutI } from 'src/app/shared/models/interfaces/layout-interface';
-
 import { MessageComponent } from '../../shared/components/message/message.component';
+import { TypeFormE } from '../interfaces/enums/form-enum';
+import { ProductI } from '../interfaces/interfaces/product.interface';
 import { ProductService } from '../services/product.service';
+import * as _ from 'lodash';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -13,6 +22,7 @@ import { ProductService } from '../services/product.service';
 })
 export class FormComponent implements OnInit {
   form = new FormGroup({
+    _id: new FormControl(''),
     _name: new FormControl('', Validators.required),
     _amount: new FormControl('', [
       Validators.required,
@@ -24,33 +34,120 @@ export class FormComponent implements OnInit {
     ]),
   });
 
+  initForm = this.form.value;
+
+  id: string = '';
+
+  activedButton: boolean = true;
+
+  loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
   layout: LayoutI = {
-    title: 'New Product',
+    title: 'Create Product',
     button: {
       icon: 'arrow_back',
       url: '/product',
     },
   };
 
-  disabledButton: boolean = true;
+  constructor(
+    public dialog: MatDialog,
+    private productS: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
+    this.setUpWhenIsUpdate();
+  }
 
-  constructor(public dialog: MatDialog, private productS: ProductService) {}
-
-  ngOnInit(): void {
-    this.form.statusChanges.subscribe((e) => {
-      this.disabledButton = e === 'INVALID';
+  private setUpWhenIsUpdate(): void {
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.id = params.hasOwnProperty('id') ? params['id'] : '';
+      if (this.id) {
+        this.setUpTitlePage();
+        this.loadData();
+      }
     });
   }
 
-  save() {
-    console.log(this.form);
-    this.openDialog();
+  private setUpTitlePage() {
+    this.layout.title = this.id ? 'Update Product' : 'Create Product';
   }
 
-  openDialog() {
+  private loadData(): void {
+    this.productS.getOne(this.id).subscribe((product: ProductI) => {
+      this.form.controls['_id'].setValue(product._id);
+      this.form.controls['_name'].setValue(product._name);
+      this.form.controls['_amount'].setValue(product._amount);
+      this.form.controls['_price'].setValue(product._price);
+
+      this.form.controls['_amount'].disable();
+
+      this.initForm = this.form.value;
+
+      this.loading.next(false);
+    });
+  }
+
+  ngOnInit(): void {
+    this.loading.subscribe((e) => {
+      if (!e) {
+        this.setStatusButton();
+        console.log(this.form.value);
+        this.watchSaveButton();
+      }
+    });
+  }
+
+  // this.activedButton = this.form.valid && this.formHasChanges();
+  private watchSaveButton(): void {
+    this.form.valueChanges.subscribe((status: FormControlStatus) => {
+      this.activedButton = this.form.valid && this.formHasChanges();
+      console.log(this.form.valid, this.formHasChanges());
+    });
+  }
+
+  private setStatusButton(): void {
+    this.activedButton = this.form.valid && this.formHasChanges();
+  }
+
+  private isInUpdatePage(): boolean {
+    return !!this.id;
+  }
+
+  private setUpInitForm(): void {
+    if (!this.initForm._id || !this.initForm._name) {
+      this.initForm = this.form.value;
+    }
+  }
+
+  private formHasChanges(): boolean {
+    return !_.isEqual(this.initForm, this.form.value);
+  }
+
+  public save() {
+    this.isInUpdatePage() ? this.update() : this.create();
+  }
+
+  private create(): void {
     this.productS.create(this.form.value).subscribe((e) => {
       console.log(e);
     });
+  }
+
+  private update(): void {
+    this.productS.update(this.form.value).subscribe((e) => {
+      console.log(e);
+    });
+    // console.log(this.router.url)
+    // this.router.navigateByUrl(this.router.url);
+  }
+
+  openDialog() {}
+
+  show() {
+    console.log(this.form.valid, this.formHasChanges());
+    console.log(this.form.valid, this.initForm, this.form.value);
+    console.log(this.activedButton);
   }
 }
 

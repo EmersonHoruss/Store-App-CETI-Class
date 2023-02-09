@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductI } from '../interfaces/product.interface';
+import { ProductI } from '../interfaces/interfaces/product.interface';
 import { ProductService } from '../services/product.service';
 
 @Component({

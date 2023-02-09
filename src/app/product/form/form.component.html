@@ -1,5 +1,8 @@
 <app-layout [layout]="layout">
-  <form [formGroup]="form" class="flex flex-col justify-center items-center mt-8">
+  <form
+    [formGroup]="form"
+    class="flex flex-col justify-center items-center mt-8"
+  >
     <mat-form-field appearance="outline" class="w-80">
       <mat-label>Name</mat-label>
       <input
@@ -11,12 +14,22 @@
 
     <mat-form-field appearance="outline" class="w-80">
       <mat-label>Amount</mat-label>
-      <input matInput placeholder="20" formControlName="_amount" />
+      <input
+        matInput
+        placeholder="20"
+        formControlName="_amount"
+        type="number"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-80">
       <mat-label>Price</mat-label>
-      <input matInput placeholder="19.99" formControlName="_price" />
+      <input
+        matInput
+        placeholder="19.99"
+        formControlName="_price"
+        type="number"
+      />
     </mat-form-field>
 
     <!-- [disabled]="disabledButton" -->
@@ -26,8 +39,10 @@
       class="w-80"
       color="primary"
       (click)="save()"
+      [disabled]="!activedButton"
     >
       Save
     </button>
   </form>
+  <button (click)="show()">show</button>
 </app-layout>
