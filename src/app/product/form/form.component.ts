@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -8,9 +8,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LayoutI } from 'src/app/shared/models/interfaces/layout-interface';
-import { MessageComponent } from '../../shared/components/message/message.component';
-import { TypeFormE } from '../interfaces/enums/form-enum';
-import { ProductI } from '../interfaces/interfaces/product.interface';
+import { ProductI } from '../models/interfaces/product.interface';
 import { ProductService } from '../services/product.service';
 import * as _ from 'lodash';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -21,6 +19,14 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
+  layout: LayoutI = {
+    title: 'Create Product',
+    button: {
+      icon: 'arrow_back',
+      url: '/product',
+    },
+  };
+
   form = new FormGroup({
     _id: new FormControl(''),
     _name: new FormControl('', Validators.required),
@@ -41,14 +47,6 @@ export class FormComponent implements OnInit {
   activedButton: boolean = true;
 
   loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-
-  layout: LayoutI = {
-    title: 'Create Product',
-    button: {
-      icon: 'arrow_back',
-      url: '/product',
-    },
-  };
 
   constructor(
     public dialog: MatDialog,
@@ -112,12 +110,6 @@ export class FormComponent implements OnInit {
 
   private isInUpdatePage(): boolean {
     return !!this.id;
-  }
-
-  private setUpInitForm(): void {
-    if (!this.initForm._id || !this.initForm._name) {
-      this.initForm = this.form.value;
-    }
   }
 
   private formHasChanges(): boolean {

@@ -1,0 +1,81 @@
+<div class="mat-dialog-content">
+  <h2>Agregar Productos</h2>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z2 w-full mt-4"
+  >
+    <ng-container
+      *ngFor="let keyColumn of keyColumns"
+      [matColumnDef]="keyColumn"
+    >
+      <th mat-header-cell *matHeaderCellDef class="last:w-20">
+        {{ matchColumn(keyColumn) }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="keyColumn !== 'Options'; else options">
+          {{ element[keyColumn] }}
+        </div>
+        <ng-template #options>
+          <div class="w-20 flex items-center gap-x-2">
+            <button
+              mat-mini-fab
+              color="primary"
+              class="store-ceti-button"
+              (click)="select(element)"
+              *ngIf="selected === element._id"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+
+            <mat-icon *ngIf="selected !== element._id" (click)="select(element)"
+              >done</mat-icon
+            >
+          </div>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="keyColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: keyColumns"></tr>
+  </table>
+
+  <form [formGroup]="form" class="flex gap-20 mt-8">
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Cantidad</mat-label>
+      <input
+        matInput
+        placeholder="22"
+        formControlName="_amount"
+        type="number"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Total</mat-label>
+      <input
+        matInput
+        placeholder="72478879"
+        formControlName="_total"
+        type="number"
+      />
+    </mat-form-field>
+  </form>
+
+  <div class="flex justify-between content-center my-4">
+    <button mat-button mat-raised-button type="button" (click)="cancel()">
+      Cancel
+    </button>
+
+    <button
+      mat-button
+      mat-raised-button
+      color="primary"
+      (click)="save()"
+      type="button"
+    >
+      Save
+    </button>
+  </div>
+</div>

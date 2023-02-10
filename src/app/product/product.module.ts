@@ -13,8 +13,8 @@ import { AddComponent } from './add/add.component';
   declarations: [ProductComponent, FormComponent, AddComponent],
   imports: [
     CommonModule,
-    MaterialModule,
     ProductRoutingModule,
+    MaterialModule,
     SharedModule,
     HttpClientModule,
   ],
