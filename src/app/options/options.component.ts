@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from '../login/services/login/login.service';
 
 @Component({
   selector: 'app-options',
@@ -7,9 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./options.component.scss'],
 })
 export class OptionsComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loginService: LoginService) {}
 
-  navigate(page: string) {
+  public navigate(page: string): void {
     this.router.navigateByUrl(`/${page}`);
+  }
+
+  public logout(): void {
+    this.loginService.logout();
   }
 }
