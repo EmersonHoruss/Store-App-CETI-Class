@@ -1,20 +1,31 @@
-<div class="flex flex-col w-32">
-  <button
-    type="button"
-    mat-button
-    mat-stroked-button
-    (click)="navigate('home')"
-  >
-    Página principal
-  </button>
-  <button
-    type="button"
-    mat-button
-    mat-stroked-button
-    (click)="navigate('product')"
-  >
-    Gestionar Productos
-  </button>
+<div class="flex flex-col w-32 h-full justify-between">
+  <div>
+    <button
+      type="button"
+      mat-button
+      mat-stroked-button
+      (click)="navigate('home')"
+    >
+      Página principal
+    </button>
+    <button
+      type="button"
+      mat-button
+      mat-stroked-button
+      (click)="navigate('product')"
+    >
+      Gestionar Productos
+    </button>
+    <button
+      type="button"
+      mat-button
+      mat-stroked-button
+      (click)="navigate('sell')"
+    >
+      Gestionar Ventas
+    </button>
+  </div>
+
   <button
     type="button"
     mat-button
