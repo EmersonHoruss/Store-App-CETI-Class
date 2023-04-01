@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   nameError: string = 'Nombre incorrecto.';
   passwordError: string = 'Contraseña incorrecta.';
 
+  isVisible: boolean = false;
+  typePassword: string = 'password';
+
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {}
@@ -29,6 +32,16 @@ export class LoginComponent implements OnInit {
 
     if (loginAnswer._passwordIsIncorrect) {
       this.form.controls['_password'].setErrors({});
+    }
+  }
+
+  public toggleVisibility(): void {
+    this.isVisible = !this.isVisible;
+    console.log(this.isVisible);
+    if (this.isVisible) {
+      this.typePassword = 'text';
+    } else {
+      this.typePassword = 'password';
     }
   }
 }

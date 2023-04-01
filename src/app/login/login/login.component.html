@@ -13,7 +13,19 @@
 
     <mat-form-field appearance="outline" class="w-80">
       <mat-label>Contraseña: </mat-label>
-      <input matInput formControlName="_password" type="password" />
+      <input matInput formControlName="_password" [type]="typePassword" />
+      <mat-icon
+        *ngIf="isVisible; else invisible"
+        matSuffix
+        (click)="toggleVisibility()"
+        >visibility_off</mat-icon
+      >
+      <ng-template #invisible>
+        <mat-icon matSuffix (click)="toggleVisibility()"
+          >visibility</mat-icon
+        >
+      </ng-template>
+
       <mat-error>{{ passwordError }}</mat-error>
     </mat-form-field>
 
