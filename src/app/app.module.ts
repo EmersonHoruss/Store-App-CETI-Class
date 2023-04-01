@@ -10,6 +10,7 @@ import { SellModule } from './sell/sell.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { OptionsComponent } from './options/options.component';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, OptionsComponent],
@@ -19,7 +20,8 @@ import { OptionsComponent } from './options/options.component';
     BrowserAnimationsModule,
     MaterialModule,
     ProductModule,
-    SellModule
+    SellModule,
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,9 +1,15 @@
-<mat-drawer-container class="w-full h-full" autosize>
-  <mat-drawer #drawer mode="side" opened>
-    <app-options></app-options>
-  </mat-drawer>
+<ng-container *ngIf="!isLogged; else elseTemplate">
+  <app-login></app-login>
+</ng-container>
 
-  <div class="w-full h-full">
-    <router-outlet></router-outlet>
-  </div>
-</mat-drawer-container>
+<ng-template #elseTemplate>
+  <mat-drawer-container class="w-full h-full" autosize>
+    <mat-drawer #drawer mode="side" opened>
+      <app-options></app-options>
+    </mat-drawer>
+
+    <div class="w-full h-full">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+</ng-template>

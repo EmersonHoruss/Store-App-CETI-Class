@@ -1,0 +1,9 @@
+<form [formGroup]="form">
+  <label for="">Nombre: </label>
+  <input type="text" formControlName="name" />
+
+  <label for="">Contraseña: </label>
+  <input type="text" formControlName="password" />
+
+  <button (click)="login()">Login</button>
+</form>
