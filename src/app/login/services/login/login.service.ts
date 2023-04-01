@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../../interfaces/user.interface';
 import { users } from '../../data/users.data';
-
+import { LoginAnswer } from '../../interfaces/login-answer.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -39,12 +39,25 @@ export class LoginService {
     localStorage.setItem('isLogged', JSON.stringify(this.isLogged.getValue()));
   }
 
-  public login(user: UserInterface): void {
+  public login(user: UserInterface): LoginAnswer {
     const isInDB = users.find(
-      (e) => e.name === user.name && e.password === user.password
+      (e) => e._name === user._name && e._password === user._password
     );
 
     this.setIsLogged(!!isInDB);
+
+    return {
+      _nameIsIncorrect: !this.existName(user),
+      _passwordIsIncorrect: !this.existPassword(user),
+    };
+  }
+
+  private existName(user: UserInterface): boolean {
+    return !!users.find((e) => e._name === user._name);
+  }
+
+  private existPassword(user: UserInterface): boolean {
+    return !!users.find((e) => e._password === user._password);
   }
 
   public logout(): void {

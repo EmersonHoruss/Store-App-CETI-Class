@@ -1,9 +1,24 @@
-<form [formGroup]="form">
-  <label for="">Nombre: </label>
-  <input type="text" formControlName="name" />
+<div class="flex flex-col justify-center items-center gap-6 w-full h-full">
+  <h1>Iniciar Sesión</h1>
 
-  <label for="">Contraseña: </label>
-  <input type="text" formControlName="password" />
+  <form
+    [formGroup]="form"
+    class="flex flex-col justify-center items-center gap-2"
+  >
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Nombre: </mat-label>
+      <input matInput formControlName="_name" type="text" />
+      <mat-error>{{ nameError }}</mat-error>
+    </mat-form-field>
 
-  <button (click)="login()">Login</button>
-</form>
+    <mat-form-field appearance="outline" class="w-80">
+      <mat-label>Contraseña: </mat-label>
+      <input matInput formControlName="_password" type="password" />
+      <mat-error>{{ passwordError }}</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button class="w-80" color="primary" (click)="login()">
+      Iniciar Sesión
+    </button>
+  </form>
+</div>
