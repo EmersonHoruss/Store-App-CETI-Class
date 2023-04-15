@@ -1,0 +1,12 @@
+<mat-card-header>
+  <mat-card-title>
+    <p class="w-full flex items-center gap-4 " [ngClass]="color">
+      <mat-icon>{{ message.icon }}</mat-icon>
+      <em>{{ message.title }}</em>
+    </p>
+  </mat-card-title>
+</mat-card-header>
+
+<mat-card-content>
+  <p>{{ message.content }}</p>
+</mat-card-content>

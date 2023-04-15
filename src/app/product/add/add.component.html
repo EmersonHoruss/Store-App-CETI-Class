@@ -16,6 +16,8 @@
       <mat-form-field appearance="outline" class="w-36">
         <mat-label>Added amount</mat-label>
         <input matInput placeholder="10" formControlName="_addedAmount" />
+        <!-- type="number" -->
+        <mat-error>{{ amountError }}</mat-error>
       </mat-form-field>
     </div>
 

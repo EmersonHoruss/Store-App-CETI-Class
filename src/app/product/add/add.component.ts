@@ -1,8 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidationErrors,
+} from '@angular/forms';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog,
+} from '@angular/material/dialog';
 import { ProductI } from '../models/interfaces/product.interface';
 import { ProductService } from '../services/product.service';
+import { MessageComponent } from 'src/app/shared/message/message/message.component';
+import { MessageInterface } from 'src/app/shared/message/interfaces/message.interface';
+import { KindMessageEnum } from 'src/app/shared/message/enum/kind-message.enum';
 
 @Component({
   selector: 'app-add',
@@ -16,12 +28,15 @@ export class AddComponent implements OnInit {
     _addedAmount: new FormControl('', Validators.required),
   });
 
+  amountError: string = 'Es obligatorio';
+
   clonedProduct!: ProductI;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public product: ProductI,
     private dialogRef: MatDialogRef<AddComponent>,
-    private productS: ProductService
+    private productS: ProductService,
+    public dialog: MatDialog
   ) {
     this.clonedProduct = product;
     this.settingForm(product);
@@ -34,14 +49,72 @@ export class AddComponent implements OnInit {
     this.form.controls['_amount'].disable();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form.controls['_addedAmount'].valueChanges.subscribe(
+      (currentAmount) => {
+        if (this.isHigherThanAmount(currentAmount)) {
+          this.setHigherAddedAmountError();
+        }
+
+        this.managerAddedAmountError();
+      }
+    );
+  }
+
+  private isHigherThanAmount(currentAmount: number): boolean {
+    return currentAmount > this.form.controls['_amount'].value;
+  }
+
+  private setHigherAddedAmountError(): void {
+    this.form.controls['_addedAmount'].setErrors({ higherThanAmount: true });
+  }
+
+  private managerAddedAmountError(): void {
+    const errors: ValidationErrors | null =
+      this.form.controls['_addedAmount'].errors;
+
+    if (errors) {
+      if (errors.hasOwnProperty('required')) {
+        this.amountError = 'Es obligatorio.';
+      }
+
+      if (errors.hasOwnProperty('higherThanAmount')) {
+        this.amountError = 'No debe superar a la cantidad.';
+      }
+    }
+  }
 
   public save(): void {
-    this.productS
-      .addStock(this.clonedProduct._id, this.form.value._addedAmount)
-      .subscribe((product: ProductI) => {
-        this.clonedProduct._amount = product._amount;
-        this.dialogRef.close();
-      });
+    if (this.isValidAddedAmount()) {
+      this.productS
+        .addStock(this.clonedProduct._id, this.form.value._addedAmount)
+        .subscribe(
+          (product: ProductI) => {
+            const message: MessageInterface = {
+              kind: KindMessageEnum.success,
+              content: 'Se agregaron productos satisfactoriamente.',
+            };
+            this.dialog
+              .open(MessageComponent, { data: message })
+              .afterClosed()
+              .subscribe(() => {
+                this.clonedProduct._amount = product._amount;
+                this.dialogRef.close();
+              });
+          },
+          (err) => {
+            const message: MessageInterface = {
+              kind: KindMessageEnum.success,
+              content:
+                'Ha surgido un error, contacte al adminsitrador 989 812 342.',
+            };
+            this.dialog.open(MessageComponent, { data: message });
+          }
+        );
+    }
+  }
+
+  private isValidAddedAmount(): boolean {
+    return !!!this.form.controls['_addedAmount'].errors;
   }
 }

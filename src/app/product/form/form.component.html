@@ -10,6 +10,7 @@
         placeholder="Joaquín Rivera Montaño"
         formControlName="_name"
       />
+      <mat-error>{{ nameError }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-80">
@@ -20,6 +21,7 @@
         formControlName="_amount"
         type="number"
       />
+      <mat-error>{{ amountError }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-80">
@@ -30,6 +32,7 @@
         formControlName="_price"
         type="number"
       />
+      <mat-error>{{ priceError }}</mat-error>
     </mat-form-field>
 
     <button

@@ -4,16 +4,17 @@ import { LayoutComponent } from './layout/layout.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MessageComponent } from './components/message/message.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessageModule } from './message/message.module';
 @NgModule({
-  declarations: [LayoutComponent, MessageComponent],
+  declarations: [LayoutComponent],
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
     ReactiveFormsModule,
+    MessageModule,
   ],
   exports: [LayoutComponent, ReactiveFormsModule],
 })
