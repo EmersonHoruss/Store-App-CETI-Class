@@ -5,6 +5,7 @@ import { ProductService } from '../product/services/product.service';
 import { LayoutI } from '../shared/models/interfaces/layout-interface';
 import { SellI } from './models/interfaces/sell.interface';
 import { SellService } from './services/sell.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sell',
@@ -34,6 +35,7 @@ export class SellComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.loadData();
+    console.log(moment('2023-04-15T01:28:58.103Z'));
   }
 
   private loadData() {

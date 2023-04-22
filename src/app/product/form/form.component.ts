@@ -231,7 +231,7 @@ export class FormComponent implements OnInit {
     // console.log(this.activedButton);
 
     const message: MessageInterface = {
-      kind: KindMessageEnum.warning,
+      kind: KindMessageEnum.error,
       content: 'Este producto ya existe.',
     };
 

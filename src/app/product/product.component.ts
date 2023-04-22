@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutI } from '../shared/models/interfaces/layout-interface';
 import { ProductService } from './services/product.service';
 import { ProductI } from './models/interfaces/product.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddComponent } from './add/add.component';
+
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product',
@@ -19,21 +21,30 @@ export class ProductComponent {
       icon: 'add',
     },
   };
-  keyColumns: string[] = ['_name', '_amount', '_price', 'Options'];
+  keyColumns: string[] = ['_index', '_name', '_amount', '_price', 'Options'];
+  dataView: Array<ProductI> = [];
   dataSource: Array<ProductI> = [];
+
+  length!: number;
+  pageSizeOptions: Array<number> = [5, 10, 50, 100];
+  pageSize: number = 10;
 
   constructor(
     private router: Router,
     private productS: ProductService,
-    private dialog: MatDialog, 
-    
+    private dialog: MatDialog
   ) {
     this.loadData();
   }
 
   loadData() {
     this.productS.get().subscribe((e: Array<ProductI>) => {
-      this.dataSource = e;
+      this.dataSource = e.map((e, index) => {
+        e._index = index + 1;
+        return e;
+      });
+      this.dataView = this.paginateData(0);
+      this.length = this.dataSource.length;
     });
   }
 
@@ -47,7 +58,10 @@ export class ProductComponent {
     if (keyColumn === '_price') {
       return 'Precio (soles)';
     }
-      return 'Opciones';
+    if (keyColumn === '#') {
+      return '#';
+    }
+    return 'Opciones';
   }
 
   openAddProductModal(product: ProductI) {
@@ -57,5 +71,17 @@ export class ProductComponent {
   updateProduct(product: ProductI) {
     const url = `${this.router.url}/update/${product._id}`;
     this.router.navigateByUrl(url);
+  }
+
+  public updateData(e: any): void {
+    console.log(e);
+    this.pageSize = e.pageSize;
+    this.dataView = this.paginateData(e.pageIndex);
+  }
+
+  private paginateData(pageIndex: number): Array<ProductI> {
+    const start: number = this.pageSize * pageIndex;
+    const end: number = this.pageSize * (pageIndex + 1);
+    return this.dataSource.slice(start, end);
   }
 }

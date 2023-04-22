@@ -1,11 +1,7 @@
 <div class="mat-dialog-content">
   <h2>Agregar Productos</h2>
 
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="mat-elevation-z2 w-full mt-4"
-  >
+  <table mat-table [dataSource]="dataView" class="mat-elevation-z2 w-full mt-4">
     <ng-container
       *ngFor="let keyColumn of keyColumns"
       [matColumnDef]="keyColumn"
@@ -41,6 +37,15 @@
     <tr mat-row *matRowDef="let row; columns: keyColumns"></tr>
   </table>
 
+  <mat-paginator
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    aria-label="Select page"
+    (page)="updateData($event)"
+  >
+  </mat-paginator>
+
   <form [formGroup]="form" class="flex gap-20 mt-8">
     <mat-form-field appearance="outline" class="w-80">
       <mat-label>Cantidad</mat-label>
@@ -50,6 +55,7 @@
         formControlName="_amount"
         type="number"
       />
+      <mat-error>{{ amountError }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-80">

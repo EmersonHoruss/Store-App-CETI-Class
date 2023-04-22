@@ -1,9 +1,23 @@
 <mat-card-header>
   <mat-card-title>
-    <p class="w-full flex items-center gap-4 " [ngClass]="color">
-      <mat-icon>{{ message.icon }}</mat-icon>
-      <em>{{ message.title }}</em>
-    </p>
+    <div class="w-full flex items-center gap-4">
+      <div *ngIf="color === 'text-green-500'">
+        <mat-icon class="text-green-500">{{ message.icon }}</mat-icon>
+        <em class="text-green-500">{{ message.title }}</em>
+      </div>
+      <div *ngIf="color === 'text-blue-400'">
+        <mat-icon class="text-blue-400">{{ message.icon }}</mat-icon>
+        <em class="text-blue-400">{{ message.title }}</em>
+      </div>
+      <div *ngIf="color === 'text-yellow-300'">
+        <mat-icon class="text-yellow-300">{{ message.icon }}</mat-icon>
+        <em class="text-yellow-300">{{ message.title }}</em>
+      </div>
+      <div *ngIf="color === 'text-red-600'">
+        <mat-icon class="text-red-600">{{ message.icon }}</mat-icon>
+        <em class="text-red-600">{{ message.title }}</em>
+      </div>
+    </div>
   </mat-card-title>
 </mat-card-header>
 

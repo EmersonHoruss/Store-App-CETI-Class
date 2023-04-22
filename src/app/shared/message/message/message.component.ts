@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewEncapsulation } from '@angular/core';
 import { MessageInterface } from '../interfaces/message.interface';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KindMessageEnum } from '../enum/kind-message.enum';
@@ -7,6 +7,7 @@ import { KindMessageEnum } from '../enum/kind-message.enum';
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MessageComponent implements OnInit {
   color!: string;
@@ -16,8 +17,9 @@ export class MessageComponent implements OnInit {
 
     message.title = this.getTitle(kind);
     message.icon = this.getIcon(kind);
+    console.log(this.color);
     this.color = `text-${this.getColor(kind)}`;
-    // console.log(this.color);
+    console.log(this.color);
   }
 
   private getTitle(kind: KindMessageEnum): string {
@@ -65,7 +67,7 @@ export class MessageComponent implements OnInit {
     if (kind === KindMessageEnum.success) {
       return 'green-500';
     }
-    return 'black';
+    return 'white';
   }
 
   ngOnInit(): void {}

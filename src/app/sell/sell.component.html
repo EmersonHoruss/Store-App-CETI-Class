@@ -9,7 +9,7 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <div *ngIf="keyColumn !== 'Options'; else options">
-          {{ element[keyColumn] }}
+          {{ element[keyColumn] | date : keyColumn | currency : keyColumn }}
         </div>
         <ng-template #options>
           <div class="w-20 flex items-center gap-x-2">

@@ -12,11 +12,13 @@
           placeholder="Joaquín Rivera Montaño"
           formControlName="_customerName"
         />
+        <mat-error>{{ nameError }}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-80">
         <mat-label>DNI</mat-label>
         <input matInput placeholder="72478879" formControlName="_customerDNI" />
+        <mat-error>{{ DNIError }}</mat-error>
       </mat-form-field>
     </div>
 
@@ -54,7 +56,6 @@
         Cancel
       </button>
 
-      <!-- [disabled]="!activedButton" -->
       <button
         mat-button
         mat-raised-button
@@ -66,5 +67,4 @@
       </button>
     </div>
   </form>
-  <!-- <button (click)="show()">show</button> -->
 </app-layout>

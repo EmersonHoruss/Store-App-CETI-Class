@@ -9,9 +9,17 @@ import { SharedModule } from '../shared/shared.module';
 import { SellComponent } from './sell.component';
 import { FormComponent } from './form/form.component';
 import { DetailSellComponent } from './detail-sell/detail-sell.component';
+import { DatePipe } from './pipes/date/date.pipe';
+import { CurrencyPipe } from './pipes/currency/currency.pipe';
 
 @NgModule({
-  declarations: [SellComponent, FormComponent, DetailSellComponent],
+  declarations: [
+    SellComponent,
+    FormComponent,
+    DetailSellComponent,
+    DatePipe,
+    CurrencyPipe,
+  ],
   imports: [
     CommonModule,
     SellRoutingModule,
